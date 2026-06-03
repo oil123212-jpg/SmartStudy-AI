@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.env
+secrets.obfuscated.json
+.DS_Store
+Thumbs.db
+*.log
+*.zip
+
+# Local database and backups
+data/
+data/*.sqlite3
+data/*.sqlite3-*
+data/backups/
