@@ -107,8 +107,21 @@ def load_obfuscated_env() -> None:
         print(f"Could not load obfuscated env: {exc}")
 
 
+def normalize_llm_env_aliases() -> None:
+    serial_code = os.environ.get("LLM_SERIAL_CODE") or os.environ.get("OPENROUTER_SERIAL_CODE")
+    if serial_code and not os.environ.get("LLM_API_KEY"):
+        os.environ["LLM_API_KEY"] = serial_code
+    if serial_code and not os.environ.get("OPENROUTER_API_KEY"):
+        os.environ["OPENROUTER_API_KEY"] = serial_code
+    if not os.environ.get("LLM_API_KEY") and os.environ.get("OPENROUTER_API_KEY"):
+        os.environ["LLM_API_KEY"] = os.environ["OPENROUTER_API_KEY"]
+    if not os.environ.get("OPENROUTER_API_KEY") and os.environ.get("LLM_API_KEY"):
+        os.environ["OPENROUTER_API_KEY"] = os.environ["LLM_API_KEY"]
+
+
 load_env_file()
 load_obfuscated_env()
+normalize_llm_env_aliases()
 
 DATA_DIR = BASE_DIR / "data"
 BACKUP_DIR = DATA_DIR / "backups"
