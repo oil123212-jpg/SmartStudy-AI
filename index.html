@@ -1,0 +1,388 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartStudy AI - Multi Subject Planner</title>
+  <link rel="stylesheet" href="style.css?v=layout-20260527b" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"], ["$$", "$$"]] },
+      options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon"><img src="assets/brain_logo_purple.png" alt="SmartStudy AI 로고" /></div>
+        <div>
+          <h1>SmartStudy AI</h1>
+          <p>AI 기반 맞춤형 학습 전략 플래너</p>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <button class="nav-item active" data-view="home"><span class="nav-icon"><img src="assets/nav_home.png" alt="홈 화면" /></span><span class="nav-label">홈 화면</span></button>
+        <button class="nav-item" data-view="calendar"><span class="nav-icon"><img src="assets/nav_calendar.png" alt="일정 생성" /></span><span class="nav-label">일정 생성</span></button>
+        <button class="nav-item nav-item--main" data-view="adjust"><span class="nav-icon"><img src="assets/nav_adjust.png" alt="오늘 학습" /></span><span class="nav-label">오늘 학습</span></button>
+        <button class="nav-item" data-view="questions"><span class="nav-icon"><img src="assets/nav_questions.svg" alt="예상 문제 생성" /></span><span class="nav-label">예상 문제 생성</span></button>
+        <button class="nav-item" data-view="subjects"><span class="nav-icon"><img src="assets/nav_subjects.png" alt="과목 관리" /></span><span class="nav-label">과목 관리</span></button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> 설정</button>
+      </nav>
+
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="mobile-brand"><div class="brand-icon"><img src="assets/brain_logo_purple.png" alt="SmartStudy AI 로고" /></div><span>SmartStudy AI</span></div>
+        <div class="top-actions">
+          <button class="icon-btn" title="알림" aria-label="알림">🔔</button>
+          <button id="authButton" class="profile-btn auth-button" type="button" title="로그인">로그인</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section id="homeView" class="view active-view">
+          <div class="welcome">
+            <h2>SmartStudy AI</h2>
+            <h3>안녕하세요, 오늘도 좋은 하루 되세요! 👋</h3>
+            <p>전공과 교양 과목을 한 캘린더에 배치하고, 월간/주간 보기로 전환할 수 있습니다.</p>
+
+            <div class="hero-illustration" aria-hidden="true">
+              <div class="plant">🌱</div>
+              <div class="calendar-art">
+                <div class="rings"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="cal-top"></div>
+                <div class="cal-grid">
+                  <span class="purple"></span><span></span><span class="green"></span><span></span><span></span>
+                  <span></span><span class="blue"></span><span></span><span></span><span class="purple"></span>
+                  <span></span><span></span><span class="yellow"></span><span></span><span class="green"></span>
+                </div>
+              </div>
+              <div class="books">▰<br/>▰</div>
+              <div class="sparkle">✦</div>
+            </div>
+
+            <h4>무엇을 도와드릴까요?</h4>
+          </div>
+
+          <div class="quick-cards">
+            <article class="quick-card">
+              <div class="quick-image-wrap">
+                <img class="quick-image" src="assets/home_calendar_create.png" alt="캘린더 생성 이미지" />
+              </div>
+              <h5>캘린더 생성</h5>
+              <p>여러 과목을 등록하고 시험일까지의 회독 일정을 한 캘린더에 자동 배치합니다.</p>
+              <button class="action-btn purple-btn" data-action="open-calendar"><span class="action-btn-content"><span class="action-btn-icon"><img src="assets/nav_calendar.png" alt="" /></span><span class="action-btn-label">캘린더 생성하기</span></span></button>
+            </article>
+
+            <article class="quick-card">
+              <div class="quick-image-wrap">
+                <img class="quick-image" src="assets/home_question_generate.svg" alt="예상 문제 생성 이미지" />
+              </div>
+              <h5>예상 문제 생성</h5>
+              <p>업로드한 자료와 키워드를 바탕으로 AI 예상 문제를 빠르게 생성합니다.</p>
+              <button class="action-btn purple-btn" data-action="open-questions"><span class="action-btn-content"><span class="action-btn-icon"><img src="assets/nav_questions.svg" alt="" /></span><span class="action-btn-label">예상 문제 생성하기</span></span></button>
+            </article>
+
+            <article class="quick-card">
+              <div class="quick-image-wrap">
+                <img class="quick-image" src="assets/home_adjust_schedule.svg" alt="일정 조정 이미지" />
+              </div>
+              <h5>일정 조정</h5>
+              <p>캘린더 생성과 분리된 화면에서 과목별로 날짜를 클릭해 자동 재조정합니다.</p>
+              <button class="action-btn blue-btn" data-action="open-adjust"><span class="action-btn-content"><span class="action-btn-icon"><img src="assets/nav_adjust.png" alt="" /></span><span class="action-btn-label">일정 조정하기</span></span></button>
+            </article>
+          </div>
+
+          <div class="notice"><span>ⓘ</span> 과목은 카테고리별로 묶이며, 일정 조정은 선택한 과목에만 적용됩니다.</div>
+        </section>
+
+        <section id="calendarView" class="view">
+          <div class="page-head">
+            <div>
+              <h2>📅 일정 생성</h2>
+            </div>
+            <button class="back-home">홈으로</button>
+          </div>
+
+          <section id="subjectEntryPanel" class="panel subject-entry-panel">
+            <div class="panel-title">
+              <div>
+                <h3>과목 추가</h3>
+              </div>
+              <button id="sampleBtn" class="ghost-btn" type="button">🧪 예시 과목 채우기</button>
+            </div>
+
+            <div class="form-grid subject-form">
+              <label><span class="label-title">📘 과목명</span><input id="subjectName" type="text" placeholder="예: 미적분학" /></label>
+              <label><span class="label-title">🗂️ 카테고리</span>
+                <select id="subjectCategory">
+                  <option value="cat_major">전공</option>
+                  <option value="cat_general">교양</option>
+                </select>
+              </label>
+              <label><span class="label-title">🗓️ 시험 날짜</span><input id="examDate" type="date" /></label>
+              <label><span class="label-title">📚 범위량</span><input id="unitCount" type="number" min="1" value="12" /><small>단원 수</small></label>
+              <label><span class="label-title">⏰ 일일 공부 시간</span><input id="dailyHours" type="number" min="0.5" step="0.5" value="2" /></label>
+              <label><span class="label-title">🎯 학습 유형</span>
+                <select id="studyType">
+                  <option value="cram_2weeks">벼락치기형</option>
+                  <option value="steady_3to4weeks" selected>꾸준형</option>
+                  <option value="early_6weeks">미리 준비형</option>
+                </select>
+              </label>
+              <label><span class="label-title">🔥 난이도</span>
+                <select id="difficulty">
+                  <option value="medium">중</option>
+                  <option value="high">상</option>
+                  <option value="low">하</option>
+                </select>
+              </label>
+              <label><span class="label-title">🌱 현재 수준</span>
+                <select id="mastery">
+                  <option value="beginner">초보</option>
+                  <option value="intermediate" selected>중간</option>
+                  <option value="advanced">고급</option>
+                </select>
+              </label>
+              <label><span class="label-title">🚀 시작 희망일</span><input id="startDate" type="date" /></label>
+              <div class="button-row single-action-row">
+                <button id="addSubjectBtn" class="primary-btn primary-action-btn" type="button">➕ 과목 추가</button>
+                <p id="subjectActionHelper" class="button-help">과목이 등록되면 아래 캘린더와 단계별 계획이 자동으로 업데이트됩니다.</p>
+              </div>
+            </div>
+          </section>
+
+          
+
+
+          <section class="calendar-section">
+            <div class="panel calendar-panel">
+              <div class="calendar-header">
+                <button id="prevMonthBtn" class="month-btn" type="button">‹</button>
+                <div>
+                  <h3 id="calendarTitle">캘린더</h3>
+                  <p>날짜를 클릭하면 해당 날짜가 공부 불가일로 설정/해제됩니다.</p>
+                </div>
+                <button id="nextMonthBtn" class="month-btn" type="button">›</button>
+              </div>
+              <div class="view-toggle">
+                <button id="weekViewBtn" class="toggle-btn active" type="button">일주일 보기</button>
+                <button id="monthViewBtn" class="toggle-btn" type="button">한 달 보기</button>
+              </div>
+              <div class="weekdays"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
+              <div id="calendarGrid" class="calendar-grid"></div>
+              <div id="calendarLegend" class="legend"></div>
+              <div id="calendarClickGuide" class="calendar-click-guide">일주일 보기와 한달 보기에서 날짜를 클릭하면 공부 불가일로 설정/해제됩니다.</div>
+            </div>
+
+            <section class="panel plan-under-calendar">
+              <div class="plan-visual-header">
+                <div class="plan-visual-badge">AI PLAN</div>
+                <div class="plan-visual-copy">
+                  <h3>단계별 계획</h3>
+                  <p>과목별 학습 단계를 카드로 정리해 한눈에 볼 수 있습니다.</p>
+                </div>
+              </div>
+              <div id="planList" class="plan-list plan-visual-list"><p class="empty-text">캘린더를 생성하면 과목별 계획이 표시됩니다.</p></div>
+            </section>
+          </section>
+        </section>
+
+        <section id="adjustView" class="view">
+          <div class="page-head">
+            <div>
+              <h2>📋 오늘 학습</h2>
+            </div>
+            <button class="back-home">홈으로</button>
+          </div>
+
+          <!-- 이번 주 미수행 경고 배너 -->
+          <div id="weeklyWarningBanner" style="display:none;"></div>
+
+          <section class="adjust-exec-layout">
+            <div class="panel adjust-calendar-panel">
+              <div class="calendar-header">
+                <button id="adjustPrevBtn" class="month-btn" type="button">‹</button>
+                <div style="text-align:center;">
+                  <h3 id="adjustCalendarTitle">조정 캘린더</h3>
+                </div>
+                <button id="adjustNextBtn" class="month-btn" type="button">›</button>
+              </div>
+              <div style="text-align:center; margin-bottom:8px;">
+                <button id="goTodayBtn" class="go-today-btn" type="button">📍 오늘로 이동</button>
+              </div>
+              <div class="weekdays"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
+              <div id="adjustCalendarGrid" class="calendar-grid adjust-grid"></div>
+              <div class="legend">
+                <span><i class="dot" style="background:#e7b0a8"></i>공부 불가일</span>
+                <span><i class="dot" style="background:#6bbfb5"></i>전공 계획</span>
+                <span><i class="dot" style="background:#89c4e1"></i>교양 계획</span>
+              </div>
+            </div>
+
+            <div class="panel adjust-day-panel">
+              <h3 id="adjustDayPanelTitle">당일 학습 목록</h3>
+              <div id="adjustDayDetail" class="day-detail-box">
+                <div class="detail-empty">
+                  <div class="detail-empty-icon">📅</div>
+                  <p>날짜를 선택하면<br/>당일 학습 목록이 표시됩니다.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section id="subjectsView" class="view">
+          <div class="page-head">
+            <div>
+              <p class="section-label">Subject Category</p>
+              <h2>과목 관리</h2>
+              <p>등록된 과목별 학습 달성률을 확인합니다.</p>
+            </div>
+            <button class="back-home">홈으로</button>
+          </div>
+
+          <section class="manage-grid manage-grid-single manage-grid-progress-only">
+            <div class="panel manage-progress-panel">
+              <div class="panel-title compact-title manage-progress-title">
+                <div>
+                  <h3>전체 과목 학습 달성률</h3>
+                  <p>등록된 전체 과목의 진행률을 한눈에 보고, 과목별로 수정/삭제할 수 있습니다.</p>
+                </div>
+              </div>
+              <div id="manageSubjectList" class="subject-list manage-subject-progress-list"></div>
+            </div>
+          </section>
+        </section>
+
+
+        <section id="questionsView" class="view">
+          <div class="page-head">
+            <div>
+              <h2>예상 문제 생성</h2>
+            </div>
+            <button class="back-home">홈으로</button>
+          </div>
+
+          <section class="question-layout">
+            <div class="panel question-panel">
+              <h3>PDF 입력</h3>
+              <div class="form-grid question-form-grid">
+                <label>과목 선택
+                  <select id="questionSubjectSelect"></select>
+                </label>
+                <label>과목명
+                  <input id="questionSubjectText" type="text" placeholder="예: 미적분학, 일반물리학" />
+                </label>
+                <label>학교급
+                  <select id="questionSchoolLevelSelect">
+                    <option value="">미지정</option>
+                    <option value="middle_school">중학교</option>
+                    <option value="high_school">고등학교</option>
+                    <option value="university">대학교</option>
+                  </select>
+                </label>
+                <label>PDF 파일
+                  <input id="questionFileInput" type="file" accept="application/pdf,.pdf" multiple />
+                </label>
+                <label>키워드 수
+                  <input id="questionTopNInput" type="number" min="1" max="80" value="20" />
+                </label>
+                <label>시작 페이지
+                  <input id="questionStartPageInput" type="number" min="1" value="1" />
+                </label>
+                <label>끝 페이지
+                  <input id="questionEndPageInput" type="number" min="1" placeholder="비우면 끝까지" />
+                </label>
+                <div class="button-row">
+                  <button id="generateQuestionsBtn" class="primary-btn" type="button">키워드 분석 및 대표문제 생성</button>
+                </div>
+              </div>
+              <label class="question-wide-label">추가 조건
+                <textarea id="questionUserPromptInput" placeholder="예: 계산형보다 개념 적용형으로, PDF 범위 안에서만"></textarea>
+              </label>
+              <div id="materialResult" class="api-result-box">PDF 분석 결과가 여기에 표시됩니다.</div>
+            </div>
+
+            <div class="panel question-panel question-output-panel">
+              <div class="panel-title">
+                <h3>생성된 키워드별 대표문제</h3>
+                <button id="refreshQuestionSetsBtn" class="ghost-btn" type="button">목록 새로고침</button>
+              </div>
+              <div id="questionOutput" class="question-output">아직 생성된 문제가 없습니다.</div>
+            </div>
+          </section>
+        </section>
+
+        <section id="reportView" class="view placeholder-view">
+          <h2>분석 리포트</h2>
+          <p id="reportText">캘린더를 생성하면 과목 수, 카테고리 수, 총 학습 일정을 요약합니다.</p>
+        </section>
+
+        <section id="settingsView" class="view placeholder-view">
+          <h2>설정</h2>
+          <p>로그인하면 캘린더 생성, 일정 조정, 과목 관리 데이터가 사용자별 SQLite DB에 저장됩니다.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="authModal" class="auth-modal" aria-hidden="true">
+    <div class="auth-modal-backdrop" data-auth-close></div>
+    <div class="auth-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+      <button class="auth-close" type="button" data-auth-close>×</button>
+      <div id="authLoggedOutPanel">
+        <p class="section-label">Account</p>
+        <h2 id="authModalTitle">로그인</h2>
+        <p id="authModeDesc" class="auth-desc">로그인하면 캘린더 관련 데이터만 사용자별 SQLite DB에 저장됩니다.</p>
+
+        <div class="auth-tabs" role="tablist" aria-label="로그인 회원가입 전환">
+          <button id="authLoginTab" class="auth-tab active" type="button" data-auth-mode="login" role="tab" aria-selected="true">로그인</button>
+          <button id="authRegisterTab" class="auth-tab" type="button" data-auth-mode="register" role="tab" aria-selected="false">회원가입</button>
+        </div>
+
+        <label id="authNameLabel" hidden>이름
+          <input id="authNameInput" type="text" placeholder="예: 민석" autocomplete="name" />
+        </label>
+        <label>이메일 또는 아이디
+          <input id="authEmailInput" type="text" placeholder="예: user@example.com" autocomplete="username" />
+        </label>
+        <label>비밀번호
+          <input id="authPasswordInput" type="password" placeholder="비밀번호" autocomplete="current-password" />
+        </label>
+        <label id="authPasswordConfirmLabel" hidden>비밀번호 확인
+          <input id="authPasswordConfirmInput" type="password" placeholder="비밀번호를 한 번 더 입력" autocomplete="new-password" />
+        </label>
+        <div class="auth-actions">
+          <button id="loginBtn" class="primary-btn" type="button" data-auth-submit="login">로그인</button>
+          <button id="registerBtn" class="primary-btn" type="button" data-auth-submit="register" hidden>회원가입</button>
+        </div>
+        <p class="auth-note">회원가입 후 자동으로 로그인되며, 캘린더/과목/일정 조정 데이터만 계정에 저장됩니다.</p>
+      </div>
+      <div id="authLoggedInPanel" class="auth-profile" hidden>
+        <p class="section-label">Profile</p>
+        <h2>내 프로필</h2>
+        <div class="profile-avatar">♡</div>
+        <h3 id="profileName">사용자</h3>
+        <p id="profileEmail" class="auth-desc"></p>
+        <div class="profile-stats">
+          <div><strong id="profileSubjectCount">0</strong><span>등록 과목</span></div>
+          <div><strong id="profilePlanCount">0</strong><span>학습 토큰</span></div>
+        </div>
+        <p class="auth-note">캘린더와 예상문제 생성 기록은 로그인한 계정에만 저장됩니다.</p>
+        <button id="logoutBtn" class="danger-btn wide" type="button">로그아웃</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js?v=layout-20260527b"></script>
+</body>
+</html>
+
+

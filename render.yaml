@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: smartstudy-ai
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: "python server.py"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: SMARTSTUDY_DB
+        value: /opt/render/project/src/data/smartstudy.sqlite3
+      - key: LLM_PROVIDER
+        value: openrouter
+      - key: LLM_MODEL
+        value: openai/gpt-4o-mini
+      - key: ALLOW_DB_BACKUP
+        value: "false"
+      - key: ALLOW_OBFUSCATED_SECRETS
+        value: "false"
+      - key: MAX_JSON_BODY_BYTES
+        value: "1000000"
+      - key: MAX_UPLOAD_BYTES
+        value: "30000000"
+      - key: MAX_UPLOAD_FILE_COUNT
+        value: "5"
+      - key: SESSION_TTL_DAYS
+        value: "30"
+    disk:
+      name: smartstudy-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
