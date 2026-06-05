@@ -1052,6 +1052,39 @@ select:focus {
   opacity: 1;
 }
 
+.question-set-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(216,160,177,.15), transparent 28rem),
+    radial-gradient(circle at top right, rgba(137,196,225,.16), transparent 26rem),
+    var(--bg);
+}
+
+.question-set-viewer {
+  width: min(1060px, calc(100vw - 36px));
+  margin: 0 auto;
+  padding: 36px 0 56px;
+}
+
+.question-set-viewer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.question-set-viewer-head h1 {
+  margin: 4px 0 0;
+  font-size: 34px;
+  letter-spacing: -0.05em;
+}
+
+.question-set-viewer .question-output {
+  background: rgba(255,255,255,.9);
+  box-shadow: var(--shadow);
+}
+
 @media (max-width: 1180px) {
   .app { grid-template-columns: 250px 1fr; }
   .content { padding: 0 24px 40px; }
@@ -2217,6 +2250,7 @@ select:focus {
   text-align: left;
   display: grid;
   gap: 4px;
+  text-decoration: none;
 }
 
 .profile-question-item:hover {
@@ -2241,11 +2275,6 @@ select:focus {
   color: var(--muted);
   font-size: 12px;
   font-weight: 800;
-}
-
-.profile-question-detail {
-  max-height: 360px;
-  overflow: auto;
 }
 
 .auth-tabs {

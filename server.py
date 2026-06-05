@@ -147,7 +147,7 @@ MAX_UPLOAD_BYTES = max(1_000_000, int(os.environ.get("MAX_UPLOAD_BYTES", "300000
 MAX_UPLOAD_FILE_COUNT = max(1, min(int(os.environ.get("MAX_UPLOAD_FILE_COUNT", "5") or 5), 20))
 SESSION_TTL_DAYS = max(1, int(os.environ.get("SESSION_TTL_DAYS", "30") or 30))
 QUESTION_SET_RETENTION_DAYS = max(1, int(os.environ.get("QUESTION_SET_RETENTION_DAYS", "30") or 30))
-PUBLIC_ROOT_FILES = {"index.html", "app.js", "style.css"}
+PUBLIC_ROOT_FILES = {"index.html", "app.js", "style.css", "question-set.html", "question-set-viewer.js"}
 PUBLIC_STATIC_EXTS = {".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".woff", ".woff2"}
 PRIVATE_STATIC_NAMES = {
     ".env", ".env.example", ".gitignore", "server.py", "schema.sql", "secrets.obfuscated.json",
@@ -1044,6 +1044,7 @@ def create_question_set(payload, user_id):
         "id": set_id,
         "title": title,
         "keywords": keywords,
+        "questions": questions,
         "question_count": len(questions),
         "created_at": now,
         "last_viewed_at": now,

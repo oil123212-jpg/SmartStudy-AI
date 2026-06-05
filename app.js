@@ -108,8 +108,6 @@ function showView(name) {
 
   if (name === "questions") {
     renderQuestionSubjectOptions();
-    const output = $("questionOutput");
-    if (output) output.textContent = "생성된 예상문제는 마이페이지에 저장됩니다.";
   }
 
   if (name === "report") {
@@ -1697,17 +1695,9 @@ async function generateQuestionsFromApi(options = {}) {
       const detail = payload.detail ? `\n${payload.detail}` : "";
       throw new Error(`${payload.error || "문제 생성 실패"}${detail}`);
     }
-    if ($("questionOutput")) {
-      $("questionOutput").innerHTML = `
-        <article class="question-set-card">
-          <h4>${escapeHtml(payload.title || "키워드별 대표문제")}</h4>
-          <div class="question-meta">문제 ${Number(payload.question_count || 0)}개가 마이페이지에 저장되었습니다.</div>
-          <p class="empty-text">프로필 버튼을 눌러 마이페이지에서 저장된 예상문제를 확인할 수 있습니다.</p>
-        </article>
-      `;
-    }
+    renderQuestionSet(payload);
     loadProfileQuestionSets({ silent: true });
-    showToast("예상 문제가 마이페이지에 저장되었습니다.");
+    showToast("예상 문제 생성 완료. 마이페이지에도 저장되었습니다.");
     return payload;
   } catch (error) {
     const output = $("questionOutput");
@@ -1789,27 +1779,22 @@ function renderQuestionSet(set, target = $("questionOutput")) {
 
 function renderProfileQuestionSetList(sets) {
   const list = $("profileQuestionSets");
-  const detail = $("profileQuestionDetail");
   if (!list) return;
   if (!sets.length) {
     list.textContent = "아직 저장된 예상문제가 없습니다.";
-    if (detail) detail.textContent = "예상문제를 생성하면 이곳에서 다시 열람할 수 있습니다.";
     return;
   }
   list.innerHTML = sets.map(set => {
     const keywords = Array.isArray(set.keywords) ? set.keywords.slice(0, 4).join(", ") : "";
     const viewed = set.last_viewed_at || set.created_at || "";
     return `
-      <button class="profile-question-item" type="button" data-question-set-id="${set.id}">
+      <a class="profile-question-item" href="question-set.html?id=${encodeURIComponent(set.id)}" target="_blank" rel="noopener">
         <strong>${escapeHtml(set.title || "저장된 예상문제")}</strong>
         <span>생성일 ${escapeHtml(set.created_at || "")}</span>
         <small>${escapeHtml(keywords || "키워드 없음")} · 최근 조회 ${escapeHtml(viewed)}</small>
-      </button>
+      </a>
     `;
   }).join("");
-  list.querySelectorAll("[data-question-set-id]").forEach(btn => {
-    btn.addEventListener("click", () => openProfileQuestionSet(btn.dataset.questionSetId));
-  });
 }
 
 async function loadProfileQuestionSets(options = {}) {
@@ -1824,21 +1809,6 @@ async function loadProfileQuestionSets(options = {}) {
     renderProfileQuestionSetList(sets);
   } catch (error) {
     list.textContent = `문제 목록 불러오기 실패: ${error.message}`;
-  }
-}
-
-async function openProfileQuestionSet(setId) {
-  const detail = $("profileQuestionDetail");
-  if (!detail || !setId) return;
-  detail.textContent = "저장된 예상문제를 불러오는 중...";
-  try {
-    const res = await fetch(`${SERVER_API_BASE}/api/questions/sets/${encodeURIComponent(setId)}`, { headers: authHeaders(), cache: "no-store" });
-    const payload = await res.json();
-    if (!res.ok) throw new Error(payload.error || "문제 불러오기 실패");
-    renderQuestionSet(payload.set, detail);
-    loadProfileQuestionSets({ silent: true });
-  } catch (error) {
-    detail.textContent = `문제 불러오기 실패: ${error.message}`;
   }
 }
 
