@@ -1,0 +1,34 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="42" x2="430" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4FFFD"/>
+      <stop offset="1" stop-color="#E8F7F5"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="135" y1="90" x2="351" y2="352" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6BBFB5"/>
+      <stop offset="1" stop-color="#4AA89E"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <rect x="103" y="84" width="250" height="300" rx="34" fill="url(#panel)"/>
+  <rect x="127" y="118" width="202" height="234" rx="22" fill="white"/>
+  <rect x="154" y="154" width="48" height="40" rx="12" fill="#4AA89E" opacity="0.18"/>
+  <rect x="216" y="154" width="48" height="40" rx="12" fill="#4AA89E" opacity="0.16"/>
+  <rect x="278" y="154" width="24" height="40" rx="12" fill="#4AA89E" opacity="0.12"/>
+  <rect x="154" y="208" width="48" height="40" rx="12" fill="#4AA89E" opacity="0.16"/>
+  <rect x="216" y="208" width="48" height="40" rx="12" fill="#4AA89E" opacity="0.2"/>
+  <rect x="278" y="208" width="24" height="40" rx="12" fill="#4AA89E" opacity="0.12"/>
+  <rect x="154" y="262" width="48" height="40" rx="12" fill="#4AA89E" opacity="0.12"/>
+  <rect x="216" y="262" width="48" height="40" rx="12" fill="#4AA89E" opacity="0.16"/>
+  <rect x="278" y="262" width="24" height="40" rx="12" fill="#4AA89E" opacity="0.18"/>
+  <circle cx="309" cy="309" r="58" fill="#F4FFFD"/>
+  <circle cx="309" cy="309" r="42" fill="#4AA89E"/>
+  <path d="M309 286V309L325 321" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M375 149L388 162L413 137" stroke="#6BBFB5" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M373 202L386 215L411 190" stroke="#4AA89E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M372 257L385 270L410 245" stroke="#4AA89E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="137" y="61" width="20" height="48" rx="10" fill="#89C4E1"/>
+  <rect x="299" y="61" width="20" height="48" rx="10" fill="#89C4E1"/>
+</svg>
+
+
